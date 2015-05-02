@@ -6,17 +6,21 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 
 public class MainActivity extends ActionBarActivity {
 
     private ContactListAdapter adapter;
+    private Button button;
+    private Bundle si;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        si = savedInstanceState;
         setContentView(R.layout.activity_main);
 
         ListView contactList = (ListView) findViewById(R.id.contactListView);
@@ -41,6 +45,20 @@ public class MainActivity extends ActionBarActivity {
 //      ------------------------------------------------------------------------------------------------ added Test element...
         adapter.addContact("kebrit bala");
  //      ------------------------------------------------------------------------------------------------
+
+
+        button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                testRestart();
+            }
+        });
+    }
+
+    private void testRestart(){
+//        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_chat);
     }
 
 
