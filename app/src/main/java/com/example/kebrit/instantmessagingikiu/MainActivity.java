@@ -13,15 +13,10 @@ import android.widget.ListView;
 public class MainActivity extends ActionBarActivity {
 
     private ContactListAdapter adapter;
-    private Button button;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent myIntent = new Intent(MainActivity.this, ChatActivity.class);
-        myIntent.putExtra("name", "test"); //Optional parameters
-        MainActivity.this.startActivity(myIntent);
-        this.finish();
         setContentView(R.layout.activity_main);
 
         ListView contactList = (ListView) findViewById(R.id.contactListView);
@@ -47,14 +42,6 @@ public class MainActivity extends ActionBarActivity {
         adapter.addContact("kebrit bala");
  //      ------------------------------------------------------------------------------------------------
 
-
-        button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                testRestart();
-            }
-        });
     }
 
     private void testRestart(){
