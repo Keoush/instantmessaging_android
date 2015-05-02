@@ -43,7 +43,8 @@
             android:layout_alignParentRight="true"
             android:padding="12dp"
             android:background="@android:color/darker_gray"
-            android:clickable="false">
+            android:clickable="false"
+            android:layout_marginLeft="17dp">
 
             <TextView
                 android:id="@+id/txtMessage"
