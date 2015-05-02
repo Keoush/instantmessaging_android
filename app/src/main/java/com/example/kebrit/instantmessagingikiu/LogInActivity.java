@@ -1,29 +1,56 @@
 package com.example.kebrit.instantmessagingikiu;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 
-public class LogInActivity extends ActionBarActivity {
+public class LogInActivity extends Activity{
+
+    private Button logInButton;
+    private EditText nameText;
+    private EditText passwordText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        final SharedPreferences logHistory = getSharedPreferences("USERHISTORY", 0);
+
+        if(logHistory.contains("USERNAME")){
+            Log.d("Kebrit", "userName exist . skip log_in activity.");
+            Intent myIntent = new Intent(LogInActivity.this, MainActivity.class);
+            myIntent.putExtra("USERNAME", logHistory.getString("USERNAME", ""));
+            LogInActivity.this.startActivity(myIntent);
+
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_log_in);
 
-        Button logInButton = (Button) findViewById(R.id.logInButton);
-        
+        logInButton = (Button) findViewById(R.id.logInButton);
+        nameText = (EditText) findViewById(R.id.nameField);
+        passwordText = (EditText) findViewById(R.id.passwordField);
+
         logInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                final String name = nameText.getText().toString();
+
+                logHistory.edit().putString("USERNAME", name).commit();
+                Log.d("Kebrit", "new userName Entered : " + name);
+
                 Intent myIntent = new Intent(LogInActivity.this, MainActivity.class);
-                myIntent.putExtra("USERNAME", "unkwon"); //Optional parameters
+                myIntent.putExtra("name", name);
                 LogInActivity.this.startActivity(myIntent);
+
                 finish();
             }
         });

@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by Keoush on 4/30/2015.
@@ -21,10 +23,16 @@ public class MessageListAdapter extends BaseAdapter {
     private Context context;
 
 
+    private DateFormat dateFormatter;
+
     public MessageListAdapter(Context context) {
+
         layoutInflater = LayoutInflater.from(context);
         messages = new ArrayList<Triplet>();
         this.context = context;
+
+        dateFormatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+        dateFormatter.setLenient(false);
     }
 
     @Override
@@ -38,18 +46,23 @@ public class MessageListAdapter extends BaseAdapter {
 
 
         TextView txtMessage = (TextView) convertView.findViewById(R.id.txtMessage);
+        TextView txtDate = (TextView) convertView.findViewById(R.id.txtDate);
+
         txtMessage.setText(messages.get(position).messageContent);
 
-
-//        Animtion animation = AnimationUtils.loadAnimation(context, (position > -1) ? R.anim.up_from_bottom : R.anim.down_from_top);
-//        convertView.startAnimation(animation);
-
+        txtDate.setText(messages.get(position).date);
         return convertView;
     }
 
     public void addMessage(String message, boolean income) {
 //        -------------------------------------------------------------------------------------------
         messages.add(new Triplet(message, income));
+        notifyDataSetChanged();
+    }
+
+    public void addMessage(String message, Date date, boolean income) {
+//        -------------------------------------------------------------------------------------------
+        messages.add(new Triplet(message, date,  income));
         notifyDataSetChanged();
     }
 
@@ -71,17 +84,18 @@ public class MessageListAdapter extends BaseAdapter {
     private class Triplet {
 
         public String messageContent = "unkown!";
-        public Date date;
+        public String date;
         public boolean inCome = false;
 
         public Triplet(String m, Date d, boolean i) {
             messageContent = m;
-            date = d;
+            date = dateFormatter.format(d);
             inCome = i;
         }
 
         public Triplet(String m, boolean i) {
             messageContent = m;
+            date = "Unknown date !";
             inCome = i;
         }
 

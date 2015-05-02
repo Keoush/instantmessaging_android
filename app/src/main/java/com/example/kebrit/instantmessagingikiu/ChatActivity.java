@@ -1,14 +1,14 @@
 package com.example.kebrit.instantmessagingikiu;
 
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.support.v7.app.ActionBarActivity;
-import android.transition.TransitionManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.Date;
 
 
 public class ChatActivity extends ActionBarActivity {
@@ -39,7 +39,7 @@ public class ChatActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (!inputText.getText().toString().equals("")) {
-                    adapter.addMessage(inputText.getText().toString(), false);
+                    adapter.addMessage(inputText.getText().toString(), new Date(), false);
                     inputText.setText("");
                 } else {
                     Toast.makeText(getApplicationContext(), "Please enter some text...",
