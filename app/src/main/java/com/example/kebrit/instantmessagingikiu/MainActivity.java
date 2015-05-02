@@ -14,13 +14,14 @@ public class MainActivity extends ActionBarActivity {
 
     private ContactListAdapter adapter;
     private Button button;
-    private Bundle si;
-
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        si = savedInstanceState;
+        Intent myIntent = new Intent(MainActivity.this, ChatActivity.class);
+        myIntent.putExtra("name", "test"); //Optional parameters
+        MainActivity.this.startActivity(myIntent);
+        this.finish();
         setContentView(R.layout.activity_main);
 
         ListView contactList = (ListView) findViewById(R.id.contactListView);
