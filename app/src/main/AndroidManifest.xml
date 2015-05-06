@@ -7,6 +7,12 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+        <service android:name=".TestService" android:enabled="true"/>
+
+        <uses-permission android:name="android.permission.INTERNET" />
+        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
