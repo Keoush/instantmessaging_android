@@ -15,6 +15,7 @@ public class MainActivity extends ActionBarActivity {
 
     private ContactListAdapter adapter;
 
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +26,6 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         ListView contactList = (ListView) findViewById(R.id.contactListView);
-
 
         adapter = new ContactListAdapter(this);
         contactList.setAdapter(adapter);

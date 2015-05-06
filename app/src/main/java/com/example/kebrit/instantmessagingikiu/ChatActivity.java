@@ -19,13 +19,15 @@ public class ChatActivity extends ActionBarActivity {
 
     private MessageListAdapter adapter;
     private static Interaction interaction;
-    private static String SENDER_ID = "1";
-    private static String RECEIVER_ID = "2";
+    private static String SENDER_ID = "2";
+    private static String RECEIVER_ID = "1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        interaction = new Interaction();
+
 
         ListView chatList = (ListView) findViewById(R.id.listMessages);
 
@@ -46,6 +48,20 @@ public class ChatActivity extends ActionBarActivity {
             public void onClick(View v) {
                 if (!inputText.getText().toString().equals("")) {
                     adapter.addMessage(inputText.getText().toString(), new Date(), false);
+//      ------------------------------------------------------------------------------------------------ added Test element...
+
+                    try {
+                        Toast.makeText(getApplicationContext(), "tring to send",
+                                Toast.LENGTH_SHORT).show();
+                        interaction.sendMsg(inputText.getText().toString(), SENDER_ID, RECEIVER_ID);
+                        Toast.makeText(getApplicationContext(), "sended...",
+                                Toast.LENGTH_LONG).show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+//      ------------------------------------------------------------------------------------------------
+
                     inputText.setText("");
                 } else {
                     Toast.makeText(getApplicationContext(), "Please enter some text...",
