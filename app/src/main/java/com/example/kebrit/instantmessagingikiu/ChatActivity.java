@@ -71,9 +71,10 @@ public class ChatActivity extends ActionBarActivity {
 
         @Override
         protected Void doInBackground(String... msg) {
+            Interaction interaction = new Interaction();
             try {
-                    Log.d("kebrit:msgSending", "Tring to send msg.");
-                    interaction.sendMsg(msg[0], SENDER_ID, RECEIVER_ID);
+                    Log.d("kebrit:msgSending", "Tring to send msg. -> " + msg[0]);
+                    interaction.sendMsg(msg[0], "1", "2");
                     Log.d("kebrit:msgSending", "sent suc.");
                 } catch (Exception e) {
                     e.printStackTrace();
