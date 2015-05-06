@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.kebrit.instantmessagingikiu.adapter.MessageListAdapter;
+import com.example.kebrit.instantmessagingikiu.imhttpclientfile.Interaction;
 
 import java.util.Date;
 
@@ -17,6 +18,9 @@ public class ChatActivity extends ActionBarActivity {
 
 
     private MessageListAdapter adapter;
+    private static Interaction interaction;
+    private static String SENDER_ID = "1";
+    private static String RECEIVER_ID = "2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
