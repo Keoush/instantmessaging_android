@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.kebrit.instantmessagingikiu.adapter.MessageListAdapter;
+
 import java.util.Date;
 
 

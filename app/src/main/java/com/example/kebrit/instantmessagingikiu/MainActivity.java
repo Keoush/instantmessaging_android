@@ -6,8 +6,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
+
+import com.example.kebrit.instantmessagingikiu.adapter.ContactListAdapter;
 
 
 public class MainActivity extends ActionBarActivity {
