@@ -1,8 +1,10 @@
 package com.example.kebrit.instantmessagingikiu;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,19 +21,16 @@ public class ChatActivity extends ActionBarActivity {
 
 
     private MessageListAdapter adapter;
-//    private static Interaction interaction;
-//    private static String SENDER_ID = "1";
-//    private static String RECEIVER_ID = "2";
+    private static Interaction interaction;
+    private static String SENDER_ID = "1";
+    private static String RECEIVER_ID = "2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-
-//        interaction = new Interaction();
-        startService(new Intent(getBaseContext(), TestService.class));
-
+        interaction = new Interaction();
 
         ListView chatList = (ListView) findViewById(R.id.listMessages);
 
@@ -51,22 +50,14 @@ public class ChatActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (!inputText.getText().toString().equals("")) {
-                    adapter.addMessage(inputText.getText().toString(), new Date(), false);
-//      ------------------------------------------------------------------------------------------------ added Test element...
 
-//                    try {
-//                        Toast.makeText(getApplicationContext(), "tring to send",
-//                                Toast.LENGTH_SHORT).show();
-//                        interaction.sendMsg(inputText.getText().toString(), SENDER_ID, RECEIVER_ID);
-//                        Toast.makeText(getApplicationContext(), "sended...",
-//                                Toast.LENGTH_LONG).show();
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
+                    final String msg = inputText.getText().toString();
+                    adapter.addMessage(msg, new Date(), false);
 
-//      ------------------------------------------------------------------------------------------------
+                    new SendMsgOperation().execute(msg);
 
                     inputText.setText("");
+
                 } else {
                     Toast.makeText(getApplicationContext(), "Please enter some text...",
                             Toast.LENGTH_LONG).show();
@@ -75,6 +66,27 @@ public class ChatActivity extends ActionBarActivity {
         });
     }
 
+
+    private class SendMsgOperation extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... msg) {
+            try {
+                    Log.d("kebrit:msgSending", "Tring to send msg.");
+                    interaction.sendMsg(msg[0], SENDER_ID, RECEIVER_ID);
+                    Log.d("kebrit:msgSending", "sent suc.");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {}
+
+        @Override
+        protected void onProgressUpdate(Void... values) {}
+    }
 
     /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
