@@ -52,6 +52,9 @@ public class MessageListAdapter extends BaseAdapter {
 
         TextView txtMessage = (TextView) convertView.findViewById(R.id.txtMessage);
         TextView txtDate = (TextView) convertView.findViewById(R.id.txtDate);
+        TextView txtName = (TextView) convertView.findViewById(R.id.txtSender);
+
+        txtName.setText(messages.get(position).userID);
 
         txtMessage.setText(messages.get(position).messageContent);
 
@@ -102,11 +105,14 @@ public class MessageListAdapter extends BaseAdapter {
 
         public String messageContent = "unkown!";
         public String date;
+        public String userID = "unKnown";
         public boolean inCome = false;
 
         public Triplet(Message msg){
+            userID = msg.senderId;
             messageContent = msg.content;
             date = dateFormatter.format(msg.time);
+            inCome = true;
         }
 
         public Triplet(String m, Date d, boolean i) {
