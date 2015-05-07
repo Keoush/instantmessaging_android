@@ -1,4 +1,4 @@
-package com.example.kebrit.instantmessagingikiu;
+package com.example.kebrit.instantmessagingikiu.activity;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.kebrit.instantmessagingikiu.R;
 import com.example.kebrit.instantmessagingikiu.adapter.MessageListAdapter;
 import com.example.kebrit.instantmessagingikiu.imhttpclientfile.Interaction;
 

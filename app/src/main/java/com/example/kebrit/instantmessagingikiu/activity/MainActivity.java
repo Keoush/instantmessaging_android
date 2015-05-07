@@ -1,4 +1,4 @@
-package com.example.kebrit.instantmessagingikiu;
+package com.example.kebrit.instantmessagingikiu.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.kebrit.instantmessagingikiu.R;
 import com.example.kebrit.instantmessagingikiu.adapter.ContactListAdapter;
 
 

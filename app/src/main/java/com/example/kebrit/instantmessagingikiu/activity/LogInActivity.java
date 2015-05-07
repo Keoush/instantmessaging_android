@@ -1,4 +1,4 @@
-package com.example.kebrit.instantmessagingikiu;
+package com.example.kebrit.instantmessagingikiu.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.kebrit.instantmessagingikiu.R;
 
 
 public class LogInActivity extends Activity{
