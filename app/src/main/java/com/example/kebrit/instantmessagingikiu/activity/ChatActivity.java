@@ -23,7 +23,9 @@ public class ChatActivity extends ActionBarActivity {
 
 
     private MessageListAdapter adapter;
+
     private static Interaction interaction;
+
     private static String SENDER_ID = "1";
     private static String RECEIVER_ID = "2";
 
@@ -78,7 +80,7 @@ public class ChatActivity extends ActionBarActivity {
 
         @Override
         protected ArrayList<Message> doInBackground(Void... voids) {
-            Interaction interaction = new Interaction();
+            interaction = new Interaction();
 
             return interaction.getMsg(RECEIVER_ID);
         }
@@ -101,8 +103,15 @@ public class ChatActivity extends ActionBarActivity {
 
         @Override
         protected Void doInBackground(String... msg) {
-            Interaction interaction = new Interaction();
-            ArrayList<Message> messages = interaction.getMsg(RECEIVER_ID);
+
+            try {
+                Log.d("kebrit:msg", "User tries to send msg : " + msg[0]);
+                interaction.sendMsg(msg[0], SENDER_ID, RECEIVER_ID);
+                Log.d("kebrit:msg", "Last msg sent suc.");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             return null;
         }
 
