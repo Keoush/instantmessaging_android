@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -17,13 +15,7 @@ public class MainActivity extends ActionBarActivity {
 
     private ContactListAdapter adapter;
 
-    private class MyWebViewClient extends WebViewClient {
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
-            return true;
-        }
-    }
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,13 +24,6 @@ public class MainActivity extends ActionBarActivity {
 //        MainActivity.this.startActivity(myIntent);
 //        finish();
         setContentView(R.layout.activity_main);
-
-        WebView webView = (WebView) findViewById(R.id.webView);
-        webView.setWebViewClient(new MyWebViewClient());
-
-        String url = "http://javatechig.com";
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl(url);
 
         ListView contactList = (ListView) findViewById(R.id.contactListView);
 
