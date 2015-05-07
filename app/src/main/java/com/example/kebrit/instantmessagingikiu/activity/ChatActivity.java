@@ -1,6 +1,5 @@
 package com.example.kebrit.instantmessagingikiu.activity;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -74,12 +73,12 @@ public class ChatActivity extends ActionBarActivity {
         protected Void doInBackground(String... msg) {
             Interaction interaction = new Interaction();
             try {
-                    Log.d("kebrit:msgSending", "Tring to send msg. -> " + msg[0]);
-                    interaction.sendMsg(msg[0], "1", "2");
-                    Log.d("kebrit:msgSending", "sent suc.");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                Log.d("kebrit:msgSending", "Tring to send msg. -> " + msg[0]);
+                interaction.sendMsg(msg[0], "1", "2");
+                Log.d("kebrit:msgSending", "sent suc.");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return null;
         }
 
