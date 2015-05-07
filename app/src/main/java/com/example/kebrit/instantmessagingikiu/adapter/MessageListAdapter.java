@@ -10,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.kebrit.instantmessagingikiu.R;
+import com.example.kebrit.instantmessagingikiu.parser.Message;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -75,6 +76,13 @@ public class MessageListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public void addListMessages(ArrayList<Message> listMsg){
+        for (Message msg : listMsg){
+            messages.add(new Triplet(msg));
+        }
+        notifyDataSetChanged();
+    }
+
     @Override
     public long getItemId(int position) {
         return position;
@@ -95,6 +103,11 @@ public class MessageListAdapter extends BaseAdapter {
         public String messageContent = "unkown!";
         public String date;
         public boolean inCome = false;
+
+        public Triplet(Message msg){
+            messageContent = msg.content;
+            date = dateFormatter.format(msg.time);
+        }
 
         public Triplet(String m, Date d, boolean i) {
             messageContent = m;

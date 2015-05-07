@@ -50,12 +50,6 @@ public class MainActivity extends ActionBarActivity {
 
     }
 
-    private void testRestart(){
-//        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
-    }
-
-
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        // Inflate the menu; this adds items to the action bar if it is present.

@@ -13,7 +13,9 @@ import android.widget.Toast;
 import com.example.kebrit.instantmessagingikiu.R;
 import com.example.kebrit.instantmessagingikiu.adapter.MessageListAdapter;
 import com.example.kebrit.instantmessagingikiu.imhttpclientfile.Interaction;
+import com.example.kebrit.instantmessagingikiu.parser.Message;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 
@@ -37,9 +39,11 @@ public class ChatActivity extends ActionBarActivity {
         adapter = new MessageListAdapter(this);
         chatList.setAdapter(adapter);
 
+        new FirstMsgListOperation().execute();
+
 //      ------------------------------------------------------------------------------------------------ added Test element...
-        adapter.addMessage("first for test only..", false);
-        adapter.addMessage("first received for test only..", true);
+//        adapter.addMessage("first for test only..", false);
+//        adapter.addMessage("first received for test only..", true);
 //      ------------------------------------------------------------------------------------------------
 
         final EditText inputText = (EditText) findViewById(R.id.messageBodyField);
@@ -66,19 +70,39 @@ public class ChatActivity extends ActionBarActivity {
         });
     }
 
+    private void fillList(){
+
+    }
+
+    private class FirstMsgListOperation extends AsyncTask<Void, Void, ArrayList<Message>> {
+
+        @Override
+        protected ArrayList<Message> doInBackground(Void... voids) {
+            Interaction interaction = new Interaction();
+
+            return interaction.getMsg(RECEIVER_ID);
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Message> result) {
+            Log.d("kebrit:msg", "list filled with DB saved Msg's.");
+            adapter.addListMessages(result);
+        }
+
+        @Override
+        protected void onPreExecute() {}
+
+        @Override
+        protected void onProgressUpdate(Void... values) {}
+
+    }
 
     private class SendMsgOperation extends AsyncTask<String, Void, Void> {
 
         @Override
         protected Void doInBackground(String... msg) {
             Interaction interaction = new Interaction();
-            try {
-                Log.d("kebrit:msgSending", "Tring to send msg. -> " + msg[0]);
-                interaction.sendMsg(msg[0], "1", "2");
-                Log.d("kebrit:msgSending", "sent suc.");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            ArrayList<Message> messages = interaction.getMsg(RECEIVER_ID);
             return null;
         }
 
