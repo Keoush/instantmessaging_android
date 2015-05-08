@@ -22,11 +22,9 @@ import java.text.SimpleDateFormat;
  */
 public class MessageListAdapter extends BaseAdapter {
 
-
     private LayoutInflater layoutInflater;
     private ArrayList<Triplet> messages;
     private Context context;
-
 
     private DateFormat dateFormatter;
 
@@ -67,6 +65,11 @@ public class MessageListAdapter extends BaseAdapter {
         return convertView;
     }
 
+    public void addMessage(Message msg){
+        messages.add(new Triplet(msg));
+        notifyDataSetChanged();
+    }
+
     public void addMessage(String message, boolean income) {
 //        -------------------------------------------------------------------------------------------
         messages.add(new Triplet(message, income));
@@ -76,6 +79,12 @@ public class MessageListAdapter extends BaseAdapter {
     public void addMessage(String message, Date date, boolean income) {
 //        -------------------------------------------------------------------------------------------
         messages.add(new Triplet(message, date,  income));
+        notifyDataSetChanged();
+    }
+
+    public void addMessage(String message, String date, String name) {
+//        -------------------------------------------------------------------------------------------
+        messages.add(new Triplet(message, date, name, true));
         notifyDataSetChanged();
     }
 
@@ -113,6 +122,13 @@ public class MessageListAdapter extends BaseAdapter {
             messageContent = msg.content;
             date = dateFormatter.format(msg.time);
             inCome = true;
+        }
+
+        public Triplet(String m, String d, String n, boolean i) {
+            userID = n;
+            messageContent = m;
+            date = d;
+            inCome = i;
         }
 
         public Triplet(String m, Date d, boolean i) {

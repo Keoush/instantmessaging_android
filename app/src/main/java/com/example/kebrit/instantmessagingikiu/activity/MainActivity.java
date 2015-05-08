@@ -16,14 +16,10 @@ public class MainActivity extends ActionBarActivity {
 
     private ContactListAdapter adapter;
 
-
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        Intent myIntent = new Intent(MainActivity.this, LogInActivity.class);
-//        myIntent.putExtra("name", "test"); //Optional parameters
-//        MainActivity.this.startActivity(myIntent);
-//        finish();
+
         setContentView(R.layout.activity_main);
 
         ListView contactList = (ListView) findViewById(R.id.contactListView);

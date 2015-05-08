@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.kebrit.instantmessagingikiu.MsgReceiverIntentService;
+import com.example.kebrit.instantmessagingikiu.service.MsgReceiverIntentService;
 import com.example.kebrit.instantmessagingikiu.R;
 import com.example.kebrit.instantmessagingikiu.adapter.MessageListAdapter;
 import com.example.kebrit.instantmessagingikiu.imhttpclientfile.Interaction;
@@ -26,7 +26,6 @@ import java.util.Date;
 
 
 public class ChatActivity extends ActionBarActivity {
-
 
     private MessageListAdapter adapter;
 
@@ -49,12 +48,6 @@ public class ChatActivity extends ActionBarActivity {
         ListView chatList = (ListView) findViewById(R.id.listMessages);
 
         chatList.setAdapter(adapter);
-
-//        new MyIntentService().startReceivingMsg(this, adapter, RECEIVER_ID);
-//      ------------------------------------------------------------------------------------------------ added Test element...
-//        adapter.addMessage("first for test only..", false);
-//        adapter.addMessage("first received for test only..", true);
-//      ------------------------------------------------------------------------------------------------
 
         final EditText inputText = (EditText) findViewById(R.id.messageBodyField);
 
@@ -89,10 +82,9 @@ public class ChatActivity extends ActionBarActivity {
 
                 Log.d("Kebrit:msg", "new msg received from braodcast.");
 
-                adapter.addMessage(content, true);
+                adapter.addMessage(content, date, name);
             }
         };
-
 
         new FirstMsgListOperation().execute();
 

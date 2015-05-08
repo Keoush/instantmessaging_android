@@ -1,4 +1,4 @@
-package com.example.kebrit.instantmessagingikiu;
+package com.example.kebrit.instantmessagingikiu.service;
 
 import android.app.IntentService;
 import android.content.Context;
@@ -19,7 +19,6 @@ public class MsgReceiverIntentService extends IntentService {
         Intent intent = new Intent(context, MsgReceiverIntentService.class);
         context.startService(intent);
     }
-
 
     public MsgReceiverIntentService() {
         super("MyIntentService");
