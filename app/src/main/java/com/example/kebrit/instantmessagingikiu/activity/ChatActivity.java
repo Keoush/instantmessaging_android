@@ -1,7 +1,12 @@
 package com.example.kebrit.instantmessagingikiu.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.kebrit.instantmessagingikiu.MsgReceiverIntentService;
 import com.example.kebrit.instantmessagingikiu.R;
 import com.example.kebrit.instantmessagingikiu.adapter.MessageListAdapter;
 import com.example.kebrit.instantmessagingikiu.imhttpclientfile.Interaction;
@@ -24,6 +30,9 @@ public class ChatActivity extends ActionBarActivity {
 
     private MessageListAdapter adapter;
 
+    private BroadcastReceiver receiver;
+    private MsgReceiverIntentService msgReceiver;
+
     private static Interaction interaction;
 
     private static String SENDER_ID = "1";
@@ -35,14 +44,13 @@ public class ChatActivity extends ActionBarActivity {
         setContentView(R.layout.activity_chat);
 
         interaction = new Interaction();
+        adapter = new MessageListAdapter(this);
 
         ListView chatList = (ListView) findViewById(R.id.listMessages);
 
-        adapter = new MessageListAdapter(this);
         chatList.setAdapter(adapter);
 
-        new FirstMsgListOperation().execute();
-
+//        new MyIntentService().startReceivingMsg(this, adapter, RECEIVER_ID);
 //      ------------------------------------------------------------------------------------------------ added Test element...
 //        adapter.addMessage("first for test only..", false);
 //        adapter.addMessage("first received for test only..", true);
@@ -70,10 +78,41 @@ public class ChatActivity extends ActionBarActivity {
                 }
             }
         });
+
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                String name = intent.getStringExtra("NAME");
+                String content = intent.getStringExtra("CONTENT");
+                String date = intent.getStringExtra("DATE");
+
+                Log.d("Kebrit:msg", "new msg received from braodcast.");
+
+                adapter.addMessage(content, true);
+            }
+        };
+
+
+        new FirstMsgListOperation().execute();
+
+        msgReceiver.startReceivingMsg(this);
+
     }
 
-    private void fillList(){
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
+                new IntentFilter("MSG_SIGNAL")
+        );
+    }
 
+    @Override
+    protected void onStop() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+//        msgReceiver.stopSelf();
+        super.onStop();
     }
 
     private class FirstMsgListOperation extends AsyncTask<Void, Void, ArrayList<Message>> {

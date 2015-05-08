@@ -11,8 +11,9 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <service
-            android:name=".TestService"
-            android:enabled="true" />
+            android:name=".MsgReceiverIntentService"
+            android:exported="false" >
+        </service>
 
         <activity
             android:name=".activity.MainActivity"
@@ -47,10 +48,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".parser.WebViewActivity_test"
-            android:label="@string/title_activity_web_view_activity_test" >
-        </activity>
+
     </application>
 
 </manifest>
