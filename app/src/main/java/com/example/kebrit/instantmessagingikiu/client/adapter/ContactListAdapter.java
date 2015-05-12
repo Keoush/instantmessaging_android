@@ -1,4 +1,4 @@
-package com.example.kebrit.instantmessagingikiu.adapter;
+package com.example.kebrit.instantmessagingikiu.client.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

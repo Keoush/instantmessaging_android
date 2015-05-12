@@ -1,4 +1,4 @@
-package com.example.kebrit.instantmessagingikiu.activity;
+package com.example.kebrit.instantmessagingikiu.client.activity;
 
 import android.app.Activity;
 import android.content.Intent;

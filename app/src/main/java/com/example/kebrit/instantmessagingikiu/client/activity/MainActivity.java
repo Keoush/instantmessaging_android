@@ -1,4 +1,4 @@
-package com.example.kebrit.instantmessagingikiu.activity;
+package com.example.kebrit.instantmessagingikiu.client.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.kebrit.instantmessagingikiu.R;
-import com.example.kebrit.instantmessagingikiu.adapter.ContactListAdapter;
+import com.example.kebrit.instantmessagingikiu.client.adapter.ContactListAdapter;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -42,7 +42,7 @@ public class MainActivity extends ActionBarActivity {
         });
 //      ------------------------------------------------------------------------------------------------ added Test element...
         adapter.addContact("kebrit bala");
- //      ------------------------------------------------------------------------------------------------
+//      ------------------------------------------------------------------------------------------------
 
     }
 

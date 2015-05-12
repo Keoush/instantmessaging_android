@@ -1,4 +1,4 @@
-package com.example.kebrit.instantmessagingikiu.parser;
+package com.example.kebrit.instantmessagingikiu.servercommunication.parser;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;

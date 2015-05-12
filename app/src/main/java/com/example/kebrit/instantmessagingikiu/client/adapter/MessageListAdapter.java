@@ -1,4 +1,4 @@
-package com.example.kebrit.instantmessagingikiu.adapter;
+package com.example.kebrit.instantmessagingikiu.client.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.kebrit.instantmessagingikiu.R;
-import com.example.kebrit.instantmessagingikiu.parser.Message;
+import com.example.kebrit.instantmessagingikiu.servercommunication.parser.Message;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -121,6 +121,7 @@ public class MessageListAdapter extends BaseAdapter {
             userID = msg.senderId;
             messageContent = msg.content;
             date = dateFormatter.format(msg.time);
+            date = msg.time.toString();
             inCome = true;
         }
 

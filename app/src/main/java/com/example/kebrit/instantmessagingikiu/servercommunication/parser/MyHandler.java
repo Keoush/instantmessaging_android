@@ -1,4 +1,4 @@
-package com.example.kebrit.instantmessagingikiu.parser;
+package com.example.kebrit.instantmessagingikiu.servercommunication.parser;
 import java.util.ArrayList;
 import java.util.Date;
 import org.xml.sax.Attributes;

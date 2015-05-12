@@ -1,4 +1,4 @@
-package com.example.kebrit.instantmessagingikiu.activity;
+package com.example.kebrit.instantmessagingikiu.client.activity;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -15,11 +15,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.kebrit.instantmessagingikiu.service.MsgReceiverIntentService;
+import com.example.kebrit.instantmessagingikiu.client.service.MsgReceiverIntentService;
 import com.example.kebrit.instantmessagingikiu.R;
-import com.example.kebrit.instantmessagingikiu.adapter.MessageListAdapter;
-import com.example.kebrit.instantmessagingikiu.imhttpclientfile.Interaction;
-import com.example.kebrit.instantmessagingikiu.parser.Message;
+import com.example.kebrit.instantmessagingikiu.client.adapter.MessageListAdapter;
+import com.example.kebrit.instantmessagingikiu.servercommunication.imhttpclientfile.Interaction;
+import com.example.kebrit.instantmessagingikiu.servercommunication.parser.Message;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -88,7 +88,7 @@ public class ChatActivity extends ActionBarActivity {
 
         new FirstMsgListOperation().execute();
 
-        msgReceiver.startReceivingMsg(this);
+        msgReceiver.startReceivingMsg(this, RECEIVER_ID);
 
     }
 
@@ -112,7 +112,6 @@ public class ChatActivity extends ActionBarActivity {
         @Override
         protected ArrayList<Message> doInBackground(Void... voids) {
             interaction = new Interaction();
-
             return interaction.getMsg(RECEIVER_ID);
         }
 

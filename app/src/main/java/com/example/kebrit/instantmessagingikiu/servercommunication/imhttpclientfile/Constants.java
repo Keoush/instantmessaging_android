@@ -3,13 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.example.kebrit.instantmessagingikiu.imhttpclientfile;
-
-import java.net.URI;
+package com.example.kebrit.instantmessagingikiu.servercommunication.imhttpclientfile;
 
 /**
  *
- * @author sadegh
+ * @author reza
  */
 public class Constants {
 //    public static String URL_SEND = "http://localhost/IMHttpServer/sendMsgTo.php";
