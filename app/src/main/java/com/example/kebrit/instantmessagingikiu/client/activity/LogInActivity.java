@@ -8,8 +8,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.kebrit.instantmessagingikiu.R;
+import com.example.kebrit.instantmessagingikiu.servercommunication.imhttpclientfile.Constants;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class LogInActivity extends Activity{
@@ -18,19 +27,23 @@ public class LogInActivity extends Activity{
     private EditText nameText;
     private EditText passwordText;
 
+    private SharedPreferences preferences;
+    private boolean isFirebase = true;
+
+    private Firebase myFirebase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final SharedPreferences logHistory = getSharedPreferences("USERHISTORY", 0);
+        Firebase.setAndroidContext(this);
+        myFirebase = new Firebase(Constants.URL_FIREBASE);
 
-        if(logHistory.contains("USERNAME")){
+        preferences = getSharedPreferences("PREFERENCES", 0);
+
+        if(preferences.contains("USERNAME")){
             Log.d("Kebrit", "userName exist . skip log_in activity.");
-            Intent myIntent = new Intent(LogInActivity.this, MainActivity.class);
-            myIntent.putExtra("USERNAME", logHistory.getString("USERNAME", ""));
-            LogInActivity.this.startActivity(myIntent);
-
-            finish();
+            goToNextActivity(preferences.getString("USERNAME", ""));
             return;
         }
 
@@ -46,16 +59,54 @@ public class LogInActivity extends Activity{
 
                 final String name = nameText.getText().toString();
 
-                logHistory.edit().putString("USERNAME", name).commit();
-                Log.d("Kebrit", "new userName Entered : " + name);
+                if(isFirebase) {
+//                    checkIfUserExists(name, name);
+                }
+                else{
+                    preferences.edit().putString("USERNAME", name).commit();
+                }
 
-                Intent myIntent = new Intent(LogInActivity.this, MainActivity.class);
-                myIntent.putExtra("name", name);
-                LogInActivity.this.startActivity(myIntent);
-
-                finish();
+                goToNextActivity(name);
             }
         });
+    }
+
+    private void checkIfUserExists(final String uID, final String uName) {
+        myFirebase.child("users").child(uID).addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (dataSnapshot.getValue() == null) {
+                    Map map = new HashMap();
+                    map.put("userId", uID);
+                    map.put("username", uName);
+
+                    myFirebase.child("users").child(uID).setValue(map);
+
+                    preferences.edit().putString("USERNAME", uName).commit();
+                    preferences.edit().putString("USERID", uID).commit();
+
+                    goToNextActivity(uName);
+
+                } else {
+                    Toast.makeText(LogInActivity.this, "usersname already exists\nenter new name.", Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {}
+        });
+    }
+
+    private void goToNextActivity(String name) {
+
+        Intent myIntent = new Intent(LogInActivity.this, MainActivity.class);
+        myIntent.putExtra("USERNAME", name);
+        LogInActivity.this.startActivity(myIntent);
+
+        finish();
+        return;
     }
 
 //    @Override

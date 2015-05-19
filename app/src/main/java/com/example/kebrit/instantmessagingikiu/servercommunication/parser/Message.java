@@ -5,7 +5,9 @@ public class Message {
 
     public final String senderId;
     public final String receiverId;
+
     public final String content;
+
     public final Date time;
 
     public Message(String senderId, String receiverId, String content, Date time) {

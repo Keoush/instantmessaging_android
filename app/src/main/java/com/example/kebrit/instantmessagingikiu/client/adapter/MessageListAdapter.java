@@ -1,6 +1,7 @@
 package com.example.kebrit.instantmessagingikiu.client.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.kebrit.instantmessagingikiu.R;
+import com.example.kebrit.instantmessagingikiu.client.activity.LogInActivity;
 import com.example.kebrit.instantmessagingikiu.servercommunication.parser.Message;
 
 import java.util.ArrayList;
@@ -28,11 +30,15 @@ public class MessageListAdapter extends BaseAdapter {
 
     private DateFormat dateFormatter;
 
-    public MessageListAdapter(Context context) {
+    private String senderId;
+
+    public MessageListAdapter(Context context, String senderId) {
 
         layoutInflater = LayoutInflater.from(context);
         messages = new ArrayList<Triplet>();
         this.context = context;
+
+        this.senderId = senderId;
 
         dateFormatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         dateFormatter.setLenient(false);
@@ -66,7 +72,12 @@ public class MessageListAdapter extends BaseAdapter {
     }
 
     public void addMessage(Message msg){
-        messages.add(new Triplet(msg));
+
+        if(msg.senderId.equals(senderId))
+            messages.add(new Triplet(msg, false));
+        else
+            messages.add(new Triplet(msg, true));
+
         notifyDataSetChanged();
     }
 
@@ -76,22 +87,29 @@ public class MessageListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public void addMessage(String message, Date date, boolean income) {
+    public void addMessage(String name, String message, Date date, boolean income) {
 //        -------------------------------------------------------------------------------------------
-        messages.add(new Triplet(message, date,  income));
+        messages.add(new Triplet(name, message, date,  income));
         notifyDataSetChanged();
     }
 
-    public void addMessage(String message, String date, String name) {
+    public void addMessage(String name, String message, String date) {
 //        -------------------------------------------------------------------------------------------
         messages.add(new Triplet(message, date, name, true));
         notifyDataSetChanged();
     }
 
     public void addListMessages(ArrayList<Message> listMsg){
+
         for (Message msg : listMsg){
-            messages.add(new Triplet(msg));
+            if(msg.senderId.equals(senderId)) {
+                messages.add(new Triplet(msg, false));
+            }
+            else {
+                messages.add(new Triplet(msg, true));
+            }
         }
+
         notifyDataSetChanged();
     }
 
@@ -117,12 +135,12 @@ public class MessageListAdapter extends BaseAdapter {
         public String userID = "unKnown";
         public boolean inCome = false;
 
-        public Triplet(Message msg){
+        public Triplet(Message msg, boolean bol){
             userID = msg.senderId;
             messageContent = msg.content;
             date = dateFormatter.format(msg.time);
-            date = msg.time.toString();
-            inCome = true;
+//            date = msg.time.toString();
+            inCome = bol;
         }
 
         public Triplet(String m, String d, String n, boolean i) {
@@ -132,7 +150,8 @@ public class MessageListAdapter extends BaseAdapter {
             inCome = i;
         }
 
-        public Triplet(String m, Date d, boolean i) {
+        public Triplet(String n, String m, Date d, boolean i) {
+            userID = n;
             messageContent = m;
             date = dateFormatter.format(d);
             inCome = i;
