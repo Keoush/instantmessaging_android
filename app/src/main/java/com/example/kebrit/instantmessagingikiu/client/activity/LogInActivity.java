@@ -35,19 +35,12 @@ public class LogInActivity extends Activity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_log_in);
 
         Firebase.setAndroidContext(this);
         myFirebase = new Firebase(Constants.URL_FIREBASE);
 
         preferences = getSharedPreferences("PREFERENCES", 0);
-
-        if(preferences.contains("USERNAME")){
-            Log.d("Kebrit", "userName exist . skip log_in activity.");
-            goToNextActivity(preferences.getString("USERNAME", ""));
-            return;
-        }
-
-        setContentView(R.layout.activity_log_in);
 
         logInButton = (Button) findViewById(R.id.logInButton);
         nameText = (EditText) findViewById(R.id.nameField);
