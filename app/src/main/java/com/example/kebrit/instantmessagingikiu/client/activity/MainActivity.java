@@ -41,7 +41,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 //      ------------------------------------------------------------------------------------------------ added Test element...
-        adapter.addContact("kebrit bala");
+        adapter.addContact("Group 1");
 //      ------------------------------------------------------------------------------------------------
 
     }

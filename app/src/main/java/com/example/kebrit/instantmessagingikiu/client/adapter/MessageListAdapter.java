@@ -65,8 +65,8 @@ public class MessageListAdapter extends BaseAdapter {
         txtDate.setText(messages.get(position).date);
 
 
-        Animation animation = AnimationUtils.loadAnimation(context, R.anim.down_from_top);
-        convertView.startAnimation(animation);
+//        Animation animation = AnimationUtils.loadAnimation(context, R.anim.down_from_top);
+//        convertView.startAnimation(animation);
 
         return convertView;
     }
@@ -101,7 +101,10 @@ public class MessageListAdapter extends BaseAdapter {
 
     public void addListMessages(ArrayList<Message> listMsg){
 
+
+        Log.d("Kebrit:msg", "Filling the list for first time ... ");
         for (Message msg : listMsg){
+            Log.d("Kebrit:msg_____report : ", msg.senderId + "->" + msg.content);
             if(msg.senderId.equals(senderId)) {
                 messages.add(new Triplet(msg, false));
             }

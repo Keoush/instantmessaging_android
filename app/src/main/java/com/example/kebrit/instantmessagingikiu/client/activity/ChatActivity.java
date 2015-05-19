@@ -46,6 +46,7 @@ public class ChatActivity extends ActionBarActivity {
     private static Interaction interaction;
 
     private Firebase myFirebase;
+    private boolean firstTime = true;
 
     private static String SENDER_ID = "201";
     private static String RECEIVER_ID = "GROUP";
@@ -103,14 +104,23 @@ public class ChatActivity extends ActionBarActivity {
     private void setMsgReceiver() {
 
         if (isFirebase){
+            firstTime = true;
+
             myFirebase.child("messages").addChildEventListener(new ChildEventListener() {
+
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
+                    if(firstTime) {
+                        firstTime = false;
+                        return;
+                    }
+
                     Map messageMap = (Map)dataSnapshot.getValue();
+                    Log.d("Kebrit:msg", "New msg added to DB: " + messageMap.get("senderId") + "->" + messageMap.get("content") );
 
                     if(!messageMap.get("senderId").toString().equals(SENDER_ID) ) {
-                        adapter.addMessage(SENDER_ID, messageMap.get("content").toString(),
+                        adapter.addMessage(messageMap.get("senderId").toString(), messageMap.get("content").toString(),
                                 new Date(), true); //(Date) messageMap.get("time")
                     }
                 }
@@ -158,7 +168,7 @@ public class ChatActivity extends ActionBarActivity {
     private void fillMsgList() {
 
         if (isFirebase){
-            myFirebase.child("messages").addValueEventListener(new ValueEventListener() {
+            myFirebase.child("messages").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
 

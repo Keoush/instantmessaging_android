@@ -60,9 +60,10 @@ public class LogInActivity extends Activity{
                 final String name = nameText.getText().toString();
 
                 if(isFirebase) {
-//                    checkIfUserExists(name, name);
+                    checkIfUserExists(name, name);
                 }
                 else{
+                    preferences.edit().putString("USERID", name).commit();
                     preferences.edit().putString("USERNAME", name).commit();
                 }
 
@@ -86,8 +87,6 @@ public class LogInActivity extends Activity{
 
                     preferences.edit().putString("USERNAME", uName).commit();
                     preferences.edit().putString("USERID", uID).commit();
-
-                    goToNextActivity(uName);
 
                 } else {
                     Toast.makeText(LogInActivity.this, "usersname already exists\nenter new name.", Toast.LENGTH_LONG).show();
