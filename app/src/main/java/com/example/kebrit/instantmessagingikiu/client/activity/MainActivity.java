@@ -10,6 +10,8 @@ import android.widget.ListView;
 
 import com.example.kebrit.instantmessagingikiu.R;
 import com.example.kebrit.instantmessagingikiu.client.adapter.ContactListAdapter;
+import com.example.kebrit.instantmessagingikiu.servercommunication.imhttpclientfile.Constants;
+import com.firebase.client.Firebase;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -36,7 +38,7 @@ public class MainActivity extends ActionBarActivity {
                 Log.d("Kebrit_Log", "contact element selected : " + name);
 
                 Intent myIntent = new Intent(MainActivity.this, ChatActivity.class);
-                myIntent.putExtra("name", name); //Optional parameters
+                myIntent.putExtra("contactName", name); //Optional parameters
                 MainActivity.this.startActivity(myIntent);
             }
         });

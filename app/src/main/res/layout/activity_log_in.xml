@@ -39,4 +39,40 @@
         android:layout_marginTop="72dp"
         android:layout_alignTop="@+id/passwordField"
         android:layout_centerHorizontal="true" />
+
+    <RadioButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Use Firebase"
+        android:id="@+id/firebaseRadioButton"
+        android:layout_below="@+id/logInButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
+        android:enabled="true"
+        android:focusable="false"
+        android:checked="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Wellcome to group messaging app"
+        android:id="@+id/textView"
+        android:layout_marginTop="43dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/accent_material_light" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="please enter user and pass for login or create new user account"
+        android:id="@+id/textView2"
+        android:layout_marginTop="27dp"
+        android:layout_below="@+id/textView"
+        android:layout_alignRight="@+id/nameField"
+        android:layout_alignEnd="@+id/nameField"
+        android:layout_alignLeft="@+id/nameField"
+        android:layout_alignStart="@+id/nameField" />
 </RelativeLayout>

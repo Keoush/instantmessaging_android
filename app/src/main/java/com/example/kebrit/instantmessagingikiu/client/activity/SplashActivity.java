@@ -12,6 +12,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 
 import com.example.kebrit.instantmessagingikiu.R;
+import com.example.kebrit.instantmessagingikiu.servercommunication.imhttpclientfile.Constants;
+import com.firebase.client.Firebase;
 
 import java.util.logging.Handler;
 
@@ -28,6 +30,9 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.splash);
 
         SharedPreferences preferences = getSharedPreferences("PREFERENCES", 0);
+
+        Firebase.setAndroidContext(this);
+        Constants.myFirebase = new Firebase(Constants.URL_FIREBASE);
 
         if(preferences.contains("USERNAME")){
             Log.d("Kebrit", "userName exist . skip log_in activity.");
@@ -47,13 +52,14 @@ public class SplashActivity extends Activity {
         View v = findViewById(R.id.splashImageView);
 
         AnimationSet set = new AnimationSet(true);
+        set.setFillAfter(true);
 
         Animation fadeIn = FadeIn(800);
-        fadeIn.setStartOffset(200);
+        fadeIn.setStartOffset(300);
         set.addAnimation(fadeIn);
 
         Animation fadeOut = FadeOut(800);
-        fadeOut.setStartOffset(1800);
+        fadeOut.setStartOffset(1900);
         set.addAnimation(fadeOut);
 
         v.startAnimation(set);
@@ -61,7 +67,7 @@ public class SplashActivity extends Activity {
         Thread timerThread = new Thread(){
             public void run(){
                 try{
-                    sleep(2500);
+                    sleep(2700);
                 }catch(InterruptedException e){
                     e.printStackTrace();
                 }finally{

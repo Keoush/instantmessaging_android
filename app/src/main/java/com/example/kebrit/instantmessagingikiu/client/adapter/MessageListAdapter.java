@@ -65,8 +65,8 @@ public class MessageListAdapter extends BaseAdapter {
         txtDate.setText(messages.get(position).date);
 
 
-//        Animation animation = AnimationUtils.loadAnimation(context, R.anim.down_from_top);
-//        convertView.startAnimation(animation);
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.down_from_top);
+        convertView.startAnimation(animation);
 
         return convertView;
     }

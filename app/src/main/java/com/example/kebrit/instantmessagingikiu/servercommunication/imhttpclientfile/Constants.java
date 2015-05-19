@@ -5,6 +5,8 @@
  */
 package com.example.kebrit.instantmessagingikiu.servercommunication.imhttpclientfile;
 
+import com.firebase.client.Firebase;
+
 /**
  *
  * @author reza
@@ -33,4 +35,6 @@ public class Constants {
 
     public static String KEY_USER_ID = "userId";
     public static String KEY_USERNAME = "username";
+
+    public static Firebase myFirebase;
 }

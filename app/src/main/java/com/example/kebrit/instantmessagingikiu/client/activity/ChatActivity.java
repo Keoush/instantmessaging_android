@@ -56,6 +56,8 @@ public class ChatActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        setTitle(getIntent().getStringExtra("contactName"));
+
         SharedPreferences settings = getSharedPreferences("PREFERENCES", Context.MODE_PRIVATE);
         SENDER_ID = settings.getString("USERID", "default");
 
@@ -69,10 +71,8 @@ public class ChatActivity extends ActionBarActivity {
 
         Button sendButton = (Button) findViewById(R.id.sendButton);
 
-        if(isFirebase){
-            Firebase.setAndroidContext(this);
-            myFirebase = new Firebase(Constants.URL_FIREBASE);
-        }
+        if(isFirebase)
+            myFirebase = Constants.myFirebase;
         else
             interaction = new Interaction();
 
@@ -80,6 +80,8 @@ public class ChatActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 if (!inputText.getText().toString().equals("")) {
+
+                    firstTime = false;
 
                     final String msg = inputText.getText().toString();
                     adapter.addMessage(SENDER_ID, msg, new Date(), false);
@@ -95,31 +97,54 @@ public class ChatActivity extends ActionBarActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
         fillMsgList();
-
         setMsgReceiver();
+    }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
+                new IntentFilter("MSG_SIGNAL")
+        );
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        finish();
+    }
+    @Override
+    protected void onStop() {
+//        msgReceiver.stopSelf();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+
+        super.onStop();
     }
 
     private void setMsgReceiver() {
 
         if (isFirebase){
-            firstTime = true;
 
             myFirebase.child("messages").addChildEventListener(new ChildEventListener() {
 
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-                    if(firstTime) {
-                        firstTime = false;
-                        return;
-                    }
-
                     Map messageMap = (Map)dataSnapshot.getValue();
                     Log.d("Kebrit:msg", "New msg added to DB: " + messageMap.get("senderId") + "->" + messageMap.get("content") );
 
-                    if(!messageMap.get("senderId").toString().equals(SENDER_ID) ) {
+                    if(firstTime){
+                        adapter.addMessage(messageMap.get("senderId").toString(), messageMap.get("content").toString(),
+                                new Date(), (messageMap.get("senderId").toString().equals(SENDER_ID))? false : true);
+                    }
+                    else if(!messageMap.get("senderId").toString().equals(SENDER_ID) ) {
                         adapter.addMessage(messageMap.get("senderId").toString(), messageMap.get("content").toString(),
                                 new Date(), true); //(Date) messageMap.get("time")
                     }
@@ -168,26 +193,26 @@ public class ChatActivity extends ActionBarActivity {
     private void fillMsgList() {
 
         if (isFirebase){
-            myFirebase.child("messages").addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot snapshot) {
-
-                    ArrayList<Message> list = new ArrayList<Message>();
-
-                    for (DataSnapshot child : snapshot.getChildren()) {
-                        Map messageMap = (Map) child.getValue();
-
-                        list.add(new Message(messageMap.get("senderId").toString(),
-                                messageMap.get("receiverId").toString(), messageMap.get("content").toString(), new Date())); //(Date) messageMap.get("time")
-                    }
-                    adapter.addListMessages(list);
-                }
-
-                @Override
-                public void onCancelled(FirebaseError firebaseError) {
-
-                }
-            });
+//            myFirebase.child("messages").addListenerForSingleValueEvent(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot snapshot) {
+//
+//                    ArrayList<Message> list = new ArrayList<Message>();
+//
+//                    for (DataSnapshot child : snapshot.getChildren()) {
+//                        Map messageMap = (Map) child.getValue();
+//
+//                        list.add(new Message(messageMap.get("senderId").toString(),
+//                                messageMap.get("receiverId").toString(), messageMap.get("content").toString(), new Date())); //(Date) messageMap.get("time")
+//                    }
+//                    adapter.addListMessages(list);
+//                }
+//
+//                @Override
+//                public void onCancelled(FirebaseError firebaseError) {
+//
+//                }
+//            });
         }
         else {
             new FirstMsgListOperation().execute();
@@ -202,22 +227,6 @@ public class ChatActivity extends ActionBarActivity {
         else {
             new SendMsgOperation().execute(msg);
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        LocalBroadcastManager.getInstance(this).registerReceiver((receiver),
-                new IntentFilter("MSG_SIGNAL")
-        );
-    }
-
-    @Override
-    protected void onStop() {
-//        msgReceiver.stopSelf();
-        LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
-
-        super.onStop();
     }
 
     private class FirstMsgListOperation extends AsyncTask<Void, Void, ArrayList<Message>> {
